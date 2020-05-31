@@ -1,6 +1,9 @@
 language: c
 compiler: gcc
 
+arch:
+    - amd64
+    - arm64
 services:
   - docker
  
@@ -19,4 +22,3 @@ branches:
   except:
     - # Do not build tags that we create when we upload to GitHub Releases
     - /^(?i:continuous)$/
-
