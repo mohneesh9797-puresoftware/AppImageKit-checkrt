@@ -1,16 +1,14 @@
 language: c
 compiler: gcc
 
-arch:
-    - amd64
-    - arm64
 services:
   - docker
  
 env:
-  - ARCH=i686 DOCKER_IMAGE=toopher/centos-i386:centos6
-  - ARCH=x86_64 DOCKER_IMAGE=library/centos:6.8
- 
+  - arch: amd64
+    ARCH=x86_64 DOCKER_IMAGE=library/centos:6.8
+  - arch: arm64
+     ARCH=aarch64 DOCKER_IMAGE=library/centos:7
 script:
   - mkdir -p ./out/
   - docker run -i -v ${PWD}/out:/out -v "${PWD}:/AppImageKit-checkrt" "$DOCKER_IMAGE" /bin/bash -c "yum -y install gcc wget make binutils glibc-devel patch ; make -C /AppImageKit-checkrt ; cp /AppImageKit-checkrt/AppRun_patched out/AppRun-patched-${ARCH} ; cp /AppImageKit-checkrt/exec.so out/exec-${ARCH}.so"
